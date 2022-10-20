@@ -53,8 +53,8 @@ export default {
         }
       })
         .then(response => {
-          this.nbappel = response.count
-          this.periode = response.date
+          this.nbappel = response[0].count
+          this.periode = response[0].date
         })
         .catch(error => {
           console.log(error)
