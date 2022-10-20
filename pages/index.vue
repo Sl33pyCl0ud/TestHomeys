@@ -3,15 +3,21 @@
     <Navbar />
     <h1>API Tracking route</h1>
     <p class="title">Choisissez une période pour commencer</p>
-    <div class="card-deck">
-      <Appel  nbappel="100" periode="2019"/>
+    <div class="date">
+      <ChooseDate class="date1" @chooseDate="chooseDate2" />
+      <ChooseDate class="date2" @chooseDate="chooseDate2" />
     </div>
+    <div class="card-deck">
+      <Appel  v-bind:nbappel="nbappel" v-bind:periode="periode" />
+    </div>
+    <!--
     <div class="graphconnexion">
       <GraphConnexion/>
     </div>
     <div class="graphroute">
       <GraphRoute/>
     </div>
+    -->
   </div>
 </template>
 
@@ -20,6 +26,7 @@ import axios from 'axios'
 import Appel from '../components/Appel.vue'
 import GraphConnexion from '../components/GraphConnexion.vue'
 import GraphRoute from '../components/GraphRoute.vue'
+import ChooseDate from '../components/ChooseDate.vue'
 import Navbar from '../components/Navbar.vue'
 
 export default {
@@ -28,6 +35,7 @@ export default {
     Appel,
     GraphConnexion,
     GraphRoute,
+    ChooseDate,
     Navbar
   },
   data () {
@@ -37,15 +45,24 @@ export default {
     }
   },
   methods: {
+    /*connexion à l'API à l'aide du token de connexion*/
     fetchItems: function () {
-      axios.get('api-buildings.homeys.io/api/tracking').then(response => {
-        this.nbappel = response.data.nbappel
-        this.periode = response.data.periode
+      axios.get('https://api-buildings.homeys.io/api/tracking', {
+        headers: {
+          'Authorization': 'Bearer ' + this.process.env.Tokenconnexions
+        }
       })
+        .then(response => {
+          this.nbappel = response.count
+          this.periode = response.date
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    },
+    created () {
+      this.fetchItems()
     }
-  },
-  created () {
-    this.fetchItems()
   }
 }
 </script>
@@ -65,6 +82,11 @@ h1 {
   flex-flow: row wrap;
   justify-content: center;
   align-items: center;
+  align-content: center;
+}
+
+/* date */
+.date {
   align-content: center;
 }
 </style>

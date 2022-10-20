@@ -4,13 +4,20 @@
         <div class="card-header">Periode : {{periode}}</div>
     </div>
 </template>
+<!--Nombre total de connexions sur la période-->
 
 <script>
 export default {
-  name: 'Appel',
-  props : {
-    nbappel: String,
-    periode: String
-  }
+    name: 'Appel',
+    props: {
+        nbappel: {
+            type: String,
+            required: true
+        },
+        periode: {
+            type: String,
+            required: true
+        }
+    }
 }
 </script>

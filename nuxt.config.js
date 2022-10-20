@@ -30,14 +30,21 @@ export default {
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
 
+  // .env
+  env: {  
+    Tokenconnexions: process.env.Tokenconnexions,
+  },
+
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
+      ['@nuxtjs/dotenv', { systemvars: true }]
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     // https://go.nuxtjs.dev/bootstrap
     'bootstrap-vue/nuxt',
+    '@nuxtjs/dotenv',
   ],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
